@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+  <body>
+  <p>Write something in the text field to trigger a function.</p>
+  Please input: <input type="text" id="myInput" value="">
+
+  <script>
+    document.getElementById("myInput").addEventListener("keypress", checkInput);
+
+    let buffer = [];
+    const KEY_SEQUENCE_ARRY = ['ab', 'bc', 'cd'];
+    let lastKeyTime = Date.now();
+
+    function checkInput(event) {
+      const charList = 'abcdefghijklmnopqrstuvwxyz0123456789';
+      const key = event.key.toLowerCase();
+
+      // we are only interested in alphanumeric keys
+      if (charList.indexOf(key) === -1) return;
+
+      // calc the time difference
+      const currentTime = Date.now();
+        if (currentTime - lastKeyTime > 1000) {
+        buffer = [];
+        document.getElementById("myInput").value = '';
+      }
+
+      // add key into buffer and update the last time
+      buffer.push(key);
+      lastKeyTime = currentTime;
+
+      // condition
+      let strBuffer = buffer.join('');
+      KEY_SEQUENCE_ARRY.forEach(ele => {
+        if(strBuffer.includes(ele)) {
+          console.log('second part ===>>>', strBuffer.split(ele)[1]);
+        }
+      });
+    }
+  </script>
+
+  </body>
+</html>
